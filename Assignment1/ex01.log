@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.25)  12 NOV 2020 21:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.25)  12 NOV 2020 23:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -939,37 +939,60 @@ Underfull \hbox (badness 10000) in paragraph at lines 81--85
 
  <./img/skip_pointers.png>] [2
 
-] (./code/script.py [3
+]
+Underfull \hbox (badness 10000) in paragraph at lines 110--123
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--123
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--123
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--123
+
+ []
+
+[3
+
+] (./code/script.py [4
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 112.
- [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 112.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 128.
+ [5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 128.
  (./ex01.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 112.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 112.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 128.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 128.
 Package rerunfilecheck Info: File `ex01.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 112.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 128.
  ) 
 Here is how much of TeX's memory you used:
- 14174 strings out of 480608
- 254856 string characters out of 5903630
+ 14180 strings out of 480608
+ 254913 string characters out of 5903630
  892729 words of memory out of 5000000
- 29745 multiletter control sequences out of 15000+600000
- 557447 words of font info for 78 fonts, out of 8000000 for 9000
+ 29746 multiletter control sequences out of 15000+600000
+ 559217 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 50i,21n,79p,10120b,1924s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 50i,21n,79p,10120b,1922s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpbn8a.pfb></usr/local/texli
-ve/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb></usr/local/texlive/2
-020/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb></usr/local/texlive/2020/
-texmf-dist/fonts/type1/public/kpfonts/jkpssbn8a.pfb></usr/local/texlive/2020/te
-xmf-dist/fonts/type1/public/kpfonts/jkpsy.pfb>
-Output written on ex01.pdf (4 pages, 84192 bytes).
+ve/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmit8a.pfb></usr/local/texlive/
+2020/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb></usr/local/texlive/2020
+/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb></usr/local/texlive/2020/tex
+mf-dist/fonts/type1/public/kpfonts/jkpssbn8a.pfb></usr/local/texlive/2020/texmf
+-dist/fonts/type1/public/kpfonts/jkpsy.pfb>
+Output written on ex01.pdf (5 pages, 95866 bytes).
 PDF statistics:
- 165 PDF objects out of 1000 (max. 8388607)
- 150 compressed objects within 2 object streams
- 100 named destinations out of 1000 (max. 500000)
+ 174 PDF objects out of 1000 (max. 8388607)
+ 157 compressed objects within 2 object streams
+ 102 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -206,6 +206,7 @@ INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpexa.tfm
 INPUT img/skip_pointers.png
 INPUT ./img/skip_pointers.png
 INPUT ./img/skip_pointers.png
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpmit7t.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpbn7t.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpmsl7t.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/vf/public/kpfonts/jkpmsl7t.vf
@@ -223,6 +224,9 @@ INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpmnc.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpmn8r.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/vf/public/kpfonts/jkpmn7t.vf
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpmne.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/vf/public/kpfonts/jkpmit7t.vf
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpmite.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpmit8r.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/vf/public/kpfonts/jkpbn7t.vf
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpbne.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/kpfonts/jkpbn8r.tfm
@@ -245,6 +249,7 @@ INPUT ./ex01.out
 INPUT ./ex01.out
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpbn8a.pfb
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmit8a.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/kpfonts/jkpssbn8a.pfb
