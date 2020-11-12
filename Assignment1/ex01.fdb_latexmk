@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1605221166 "ex01.tex" "ex01.pdf" "ex01" 1605221167
+["pdflatex"] 1605221378 "ex01.tex" "ex01.pdf" "ex01" 1605221380
   "/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2020/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmr10.tfm" 1136768653 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
@@ -122,12 +122,12 @@
   "/usr/local/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1593095611 2432460 747130ada0fae74a45ffe995ca1b2705 ""
   "/usr/local/texlive/2020/texmf.cnf" 1586288231 577 d60164b4589a341208aff7a667fbbdcb ""
   "code/script.py" 1605213860 2074 492bb1b1326f3ea927b9823d2a981f98 ""
-  "ex01.aux" 1605221167 729 75f430f67ed1e30bf16247dda82106eb "pdflatex"
-  "ex01.out" 1605221167 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "ex01.tex" 1605221165 4781 d381132248019fc7543ee40172f81529 ""
+  "ex01.aux" 1605221380 729 75f430f67ed1e30bf16247dda82106eb "pdflatex"
+  "ex01.out" 1605221380 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "ex01.tex" 1605221378 4781 ee9a74e98343bac094f835a2194fb407 ""
   "img/skip_pointers.png" 1605211518 39809 3b5a202e1904d758cd61f851f79135bd ""
   (generated)
-  "ex01.log"
   "ex01.pdf"
-  "ex01.aux"
   "ex01.out"
+  "ex01.log"
+  "ex01.aux"
