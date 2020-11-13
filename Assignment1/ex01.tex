@@ -74,14 +74,15 @@
 
 \subsection*{Subtask B}
 \begin{figure}[ht]
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{img/skip_pointers.png}
-  \end{center}
+    \includegraphics[width=0.4\textwidth]{img/skip_pointers.png}
 \end{figure}
-Example query: \textit{nice AND is}\\
-\indent 1. Comparisons without skip pointers: 1 \& 6, 5 \& 6, 6 \& 6 $\Rightarrow$ 3 comparisons\\
-\indent 2. Comparisons with skip pointers: 1 \& 6, 6 \& 6 $\Rightarrow$ 2 comparisons\\
-\indent Without skip pointers we must compare the terms step by step, although 5 in \textbf{nice} is still smaller than 6 in \textbf{is}. With skip pointers we can skip the 5 in \textbf{nice} and directly go to the 6 in \textbf{nice}.\\
+
+Example query: \textit{nice AND is}
+\begin{enumerate}
+  \item Comparisons without skip pointers: 1 \& 6, 5 \& 6, 6 \& 6 $\Rightarrow$ 3 comparisons
+  \item Comparisons with skip pointers: 1 \& 6, 6 \& 6 $\Rightarrow$ 2 comparisons
+\end{enumerate}
+Without skip pointers we must compare the terms step by step, although 5 in \textbf{nice} is still smaller than 6 in \textbf{is}. With skip pointers we can skip the 5 in \textbf{nice} and directly go to the 6 in \textbf{nice}.\\
 
 \clearpage
 \section*{Pen and Paper Task 2}
