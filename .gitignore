@@ -1,5 +1,5 @@
-ex01.aux
-ex01.fdb_latexmk
-ex01.fls
-ex01.log
-ex01.out
+**/*.aux
+**/*.fdb_latexmk
+**/*.fls
+**/*log
+**/*.out
