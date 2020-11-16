@@ -1,6 +1,6 @@
 import csv, re, nltk
 
-def index(filename: str ='IRTM/assignment1/code/postillon.csv'):
+def index(filename: str):
     index = {}
     dictionary = {}
     postings_lists = []
@@ -145,12 +145,24 @@ class Search:
 
 
 if __name__ == "__main__":
-    filename = 'IRTM/assignment1/code/postillon.csv'
-    index = index()
+    filename = 'assignment1/code/postillon.csv'
+    index = index(filename=filename)
     search = Search(filename=filename, index=index)
     
     #queries
-    print(search.query('weiß', 'maß'))
-    print(search.query('weiß', 'masse'))
-    print(search.query('weiss', 'maße'))
-    print(search.query('weiss', 'masse'))
+    print('weiß AND maß')
+    for item in search.query('weiß', 'maß'):
+        print(item)
+    
+    print('weiß AND masse')
+    for item in search.query('weiß', 'masse'):
+        print(item, '\n')
+    
+    print('weiss AND maße')
+    for item in search.query('weiss', 'maße'):
+        print(item, '\n')
+    
+    print('weiss AND masse')
+    for item in search.query('weiss', 'masse'):
+        print(item, '\n')
+
