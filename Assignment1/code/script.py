@@ -1,6 +1,6 @@
 import csv, re, nltk
 
-def index(filename: str ='IRTM/assignment1/code/postillon.csv'):
+def index(filename: str):
     index = {}
     dictionary = {}
     postings_lists = []
@@ -57,38 +57,112 @@ def index(filename: str ='IRTM/assignment1/code/postillon.csv'):
 
     return dictionary, postings_lists
 
+class Search:
 
-def query(data: tuple, term_1: str, term_2: str = ''):
-    dictionary, postings_lists = data
-    post_size = 0
-    post_id = 0
+    def __init__(self, filename: str, index: tuple):
+        self.filename = filename
+        self.index = index
 
-    #CASE 1: the query contaiuns only one term
-    if term_2 == '':
-        #iterate through terms in dictionary
-        for term in dictionary:
-            if term_1 == term:
-                post_size, post_id = dictionary[term]
-                break
+    def getPostingList(self, postID):
+        postings_lists = self.index[1]
         
         #set the index of the first postings list
         idx = 0 
         #iterate through postings lists 
         for postings_list in postings_lists:
-            if post_id == idx:
-                print(post_id)
+            if postID == idx:
                 return postings_list
                 break
             else:
                 #update index
                 idx += 1
     
-    #CASE 2: the query contains two terms
-    else:
-        #term_1 AND term_2
-        pass 
+    def query(self, term: str):
+        dictionary, postings_lists = self.index
+        postID = dictionary[term][1]
+        postings_list = self.getPostingList(postID)
+
+        #retrive text
+        with open(filename, 'r') as file:
+            reader = csv.reader(file, delimiter = '\t')
+            postings = []
+        
+            #iterate through each row of the table
+            for row in reader:
+                (docID, url, pub_date, title, news_text) = row
+                if docID in postings_list:
+                    return(docID, news_text)
+        
+        pass
+
+    def query(self, term1: str, term2: str = ''):
+        dictionary, postings_lists = self.index
+        out_list = []
+
+        #CASE 1: only one term
+        if term2 == '':
+            postID = dictionary[term1][1]
+            postings_list = self.getPostingList(postID)
+
+            #retrive text
+            with open(filename, 'r') as file:
+                reader = csv.reader(file, delimiter = '\t')
+                postings = []
+            
+                #iterate through each row of the table
+                for row in reader:
+                    (docID, url, pub_date, title, news_text) = row
+                    if docID in postings_list:
+                        out_list.append((docID, news_text))
+        #CASE 2: two terms
+        else:
+            
+            intersection_list = []
+
+            term1_postID = dictionary[term1][1]
+            term2_postID = dictionary[term2][1]
+            
+            term1_postings_list = self.getPostingList(term1_postID)
+            term2_postings_list = self.getPostingList(term2_postID)
+            
+            #intersection algorithm
+            for term1_docID in term1_postings_list:
+                for term2_docID  in term2_postings_list:
+                    if term1_docID  == term2_docID :
+                        intersection_list.append(term1_docID )
+            
+            #retrive text
+            with open(filename, 'r') as file:
+                reader = csv.reader(file, delimiter = '\t')
+                postings = []
+            
+                #iterate through each row of the table
+                for row in reader:
+                    (docID, url, pub_date, title, news_text) = row
+                    if docID in intersection_list:
+                        out_list.append((docID, news_text))
+        return out_list
 
 
 if __name__ == "__main__":
-    data = index()
-    print(query(data, '0'))
+    filename = 'assignment1/code/postillon.csv'
+    index = index(filename=filename)
+    search = Search(filename=filename, index=index)
+    
+    #queries
+    print('weiß AND maß')
+    for item in search.query('weiß', 'maß'):
+        print(item)
+    
+    print('weiß AND masse')
+    for item in search.query('weiß', 'masse'):
+        print(item, '\n')
+    
+    print('weiss AND maße')
+    for item in search.query('weiss', 'maße'):
+        print(item, '\n')
+    
+    print('weiss AND masse')
+    for item in search.query('weiss', 'masse'):
+        print(item, '\n')
+
