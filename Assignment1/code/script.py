@@ -1,6 +1,6 @@
 import csv, re, nltk
 
-def index(filename: str ='code/postillon.csv'):
+def index(filename: str ='IRTM/assignment1/code/postillon.csv'):
     index = {}
     dictionary = {}
     postings_lists = []
@@ -58,15 +58,37 @@ def index(filename: str ='code/postillon.csv'):
     return dictionary, postings_lists
 
 
-def query(term_1: str, term_2: str = ''):
+def query(data: tuple, term_1: str, term_2: str = ''):
+    dictionary, postings_lists = data
+    post_size = 0
+    post_id = 0
+
+    #CASE 1: the query contaiuns only one term
     if term_2 == '':
-        #only term_1
-        pass
+        #iterate through terms in dictionary
+        for term in dictionary:
+            if term_1 == term:
+                post_size, post_id = dictionary[term]
+                break
+        
+        #set the index of the first postings list
+        idx = 0 
+        #iterate through postings lists 
+        for postings_list in postings_lists:
+            if post_id == idx:
+                print(post_id)
+                return postings_list
+                break
+            else:
+                #update index
+                idx += 1
+    
+    #CASE 2: the query contains two terms
     else:
         #term_1 AND term_2
         pass 
-    pass
 
 
 if __name__ == "__main__":
-    index()
+    data = index()
+    print(query(data, '0'))
