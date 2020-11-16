@@ -144,8 +144,6 @@ class Search:
         return out_list
 
 
-
-
 if __name__ == "__main__":
     filename = 'IRTM/assignment1/code/postillon.csv'
     index = index()
