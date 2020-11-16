@@ -60,6 +60,7 @@ def index(filename: str ='IRTM/assignment1/code/postillon.csv'):
 
 def query(data: tuple, term_1: str, term_2: str = ''):
     dictionary, postings_lists = data
+    intersect = []
     post_size = 0
     post_id = 0
 
@@ -76,7 +77,6 @@ def query(data: tuple, term_1: str, term_2: str = ''):
         #iterate through postings lists 
         for postings_list in postings_lists:
             if post_id == idx:
-                print(post_id)
                 return postings_list
                 break
             else:
@@ -86,9 +86,46 @@ def query(data: tuple, term_1: str, term_2: str = ''):
     #CASE 2: the query contains two terms
     else:
         #term_1 AND term_2
-        pass 
+        term_1_post_id = dictionary[term_1][1]
+        term_2_post_id = dictionary[term_2][1]
+        
+        #set the index of the first postings list
+        idx = 0 
+        #iterate through postings lists 
+        for postings_list_1 in postings_lists:
+            if term_1_post_id == idx:
+                return postings_list_1
+                break
+            else:
+                #update index
+                idx += 1
+        
+        #set the index of the first postings list
+        idx = 0 
+        #iterate through postings lists 
+        for postings_list_2 in postings_lists:
+            if term_2_post_id == idx:
+                return postings_list_2
+                break
+            else:
+                #update index
+                idx += 1
+        
+        for doc_id_1 in postings_list_1:
+            for doc_id_2 in postings_list_2:
+                if doc_id_1 == doc_id_2:
+                    intersect.append(doc_id_1)
+                if doc_id_1 > doc_id_2:
+                    break
+
+        
+        return intersect
+
 
 
 if __name__ == "__main__":
     data = index()
-    print(query(data, '0'))
+    print(len(query(data, 'weiß', 'maß')))
+    print(len(query(data, 'weiß', 'masse')))
+    print(len(query(data, 'weiss', 'maße')))
+    print(len(query(data, 'weiss', 'masse')))
