@@ -68,19 +68,29 @@ class Search:
     def getPostingList(self, postings_listID):
         return self.postings_lists[postings_listID]
     
+    def getTermBigrams(self, term: str):
+        # bigrams for wildcards on the left side
+        if term[0] == '*':
+            tuple_bigrams = tuple(list(nltk.bigrams(term)) + [(term[-1], '$')])[1:]
+        # bigrams for wildcards on the right side
+        elif term[-1] == '*':
+            tuple_bigrams = tuple([('$', term[0])] + list(nltk.bigrams(term)))[:-1]
+        else:
+            tuple_bigrams = tuple([('$', term[0])] + list(nltk.bigrams(term)) + [(term[-1], '$')])
+        
+        bigrams = []
+        for bigram in tuple_bigrams:
+                #join the bigram tuple into one string
+                bigrams.append((''.join([char for char in bigram])).strip())
+
+        return tuple(bigrams)
+    
     def getBigramIndex(self): 
         #generate a new dictionary witch contains 
         #bigrams of the terms as the key
         bigrams_dictionary = {}
         for term in self.dictionary:
-            tuple_bigrams = tuple([('$', term[0])] + list(nltk.bigrams(term)) + [(term[-1], '$')])
-            bigrams = []
-            
-            #join the bigrams in a string
-            for bigram in tuple_bigrams:
-                bigrams.append((''.join([char for char in bigram])).strip())
-
-            bigrams_dictionary.update({tuple(bigrams): self.dictionary[term]})
+            bigrams_dictionary.update({self.getTermBigrams(term): self.dictionary[term]})
 
         return bigrams_dictionary, self.postings_lists
     
@@ -90,7 +100,7 @@ class Search:
 
         #CASE 1: only one term
         if term2 == '':
-            postID = self.dictionary[term1][1]
+            postID = self.bigrams_dictionary[term1][1]
             postings_list = self.getPostingList(postID)
 
             #retrive text
@@ -102,13 +112,13 @@ class Search:
                     (docID, url, pub_date, title, news_text) = row
                     if docID in postings_list:
                         out_list.append((docID, news_text))
+        
         #CASE 2: two terms
-        else:
-            
+        else: 
             intersection_list = []
 
-            term1_postID = self.dictionary[term1][1]
-            term2_postID = self.dictionary[term2][1]
+            term1_postID = self.bigrams_dictionary[term1][1]
+            term2_postID = self.bigrams_dictionary[term2][1]
             
             term1_postings_list = self.getPostingList(term1_postID)
             term2_postings_list = self.getPostingList(term2_postID)
@@ -130,6 +140,42 @@ class Search:
                         out_list.append((docID, news_text))
         return out_list
 
+    def getWildcardTerms(self, term):
+        out_list = []
+        bigrams_term_wildcard = self.getTermBigrams(term)
+        
+        # wildcard on the right side
+        if bigrams_term_wildcard[0][0] == '$':
+            for bigrams_term_dictionary in self.bigrams_dictionary:
+                
+                # check if bigrams of the dictionary correspods with the wildcard
+                if bigrams_term_dictionary[0:len(bigrams_term_wildcard)] == bigrams_term_wildcard:
+                    out_list.append(bigrams_term_dictionary)
+        
+        #wildcard on the left side
+        else:
+            print(bigrams_term_wildcard[::-1])
+            for bigrams_term_dictionary in self.bigrams_dictionary:
+                
+                # check if bigrams of the dictionary correspods with the wildcard
+                # the bigrams tuple in this case is reversed
+                bigrams_term_dictionary = bigrams_term_dictionary[::-1]
+                if bigrams_term_dictionary[0:len(bigrams_term_wildcard)] == bigrams_term_wildcard[::-1]:
+                    out_list.append(bigrams_term_dictionary[::-1])
+
+        return out_list
+
+    def queryWildcards(self, term1, term2):
+        out_list = []
+        bigrams_list_term1 = self.getWildcardTerms(term1)
+        #print(bigrams_list_term1)
+        bigrams_list_term2 = self.getWildcardTerms(term2)
+        print(bigrams_list_term1)
+        for bigrams_term1 in bigrams_list_term1:
+            for bigrams_term2 in bigrams_list_term2:
+                out_list.append(self.query(bigrams_term1, bigrams_term2))
+        
+        return out_list
 
 
 
@@ -143,7 +189,14 @@ if __name__ == "__main__":
     filename = 'assignment1/code/postillon.csv'
     index = index(filename=filename)
     search = Search(filename=filename, index=index)
-    print(search.bigrams_dictionary)
+    
+    print( search.queryWildcards('wei*', 'maße') )
+    print( search.queryWildcards('weiss', '*e') )
+    
+    
+
+
+
     """
     #queries
     print('weiß AND maß')
