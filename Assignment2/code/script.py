@@ -1,7 +1,6 @@
 import csv, re, nltk
 
 def index(filename: str):
-    index = {}
     dictionary = {}
     postings_lists = []
 
@@ -62,52 +61,41 @@ class Search:
     def __init__(self, filename: str, index: tuple):
         self.filename = filename
         self.index = index
+        self.dictionary, self.postings_lists = index
+        self.bigrams_index = self.getBigramIndex()
+        self.bigrams_dictionary, self.bigrams_postings_lists = self.bigrams_index
 
-    def getPostingList(self, postID):
-        postings_lists = self.index[1]
-        
-        #set the index of the first postings list
-        idx = 0 
-        #iterate through postings lists 
-        for postings_list in postings_lists:
-            if postID == idx:
-                return postings_list
-                break
-            else:
-                #update index
-                idx += 1
+    def getPostingList(self, postings_listID):
+        return self.postings_lists[postings_listID]
     
-    def query(self, term: str):
-        dictionary, postings_lists = self.index
-        postID = dictionary[term][1]
-        postings_list = self.getPostingList(postID)
+    def getBigramIndex(self): 
+        #generate a new dictionary witch contains 
+        #bigrams of the terms as the key
+        bigrams_dictionary = {}
+        for term in self.dictionary:
+            tuple_bigrams = tuple([('$', term[0])] + list(nltk.bigrams(term)) + [(term[-1], '$')])
+            bigrams = []
+            
+            #join the bigrams in a string
+            for bigram in tuple_bigrams:
+                bigrams.append((''.join([char for char in bigram])).strip())
 
-        #retrive text
-        with open(filename, 'r') as file:
-            reader = csv.reader(file, delimiter = '\t')
-            postings = []
-        
-            #iterate through each row of the table
-            for row in reader:
-                (docID, url, pub_date, title, news_text) = row
-                if docID in postings_list:
-                    return(docID, news_text)
-        
-        pass
+            bigrams_dictionary.update({tuple(bigrams): self.dictionary[term]})
 
+        return bigrams_dictionary, self.postings_lists
+    
     def query(self, term1: str, term2: str = ''):
-        dictionary, postings_lists = self.index
+        #dictionary, postings_lists = self.index
         out_list = []
 
         #CASE 1: only one term
         if term2 == '':
-            postID = dictionary[term1][1]
+            postID = self.dictionary[term1][1]
             postings_list = self.getPostingList(postID)
 
             #retrive text
             with open(filename, 'r') as file:
                 reader = csv.reader(file, delimiter = '\t')
-                postings = []
             
                 #iterate through each row of the table
                 for row in reader:
@@ -119,8 +107,8 @@ class Search:
             
             intersection_list = []
 
-            term1_postID = dictionary[term1][1]
-            term2_postID = dictionary[term2][1]
+            term1_postID = self.dictionary[term1][1]
+            term2_postID = self.dictionary[term2][1]
             
             term1_postings_list = self.getPostingList(term1_postID)
             term2_postings_list = self.getPostingList(term2_postID)
@@ -134,7 +122,6 @@ class Search:
             #retrive text
             with open(filename, 'r') as file:
                 reader = csv.reader(file, delimiter = '\t')
-                postings = []
             
                 #iterate through each row of the table
                 for row in reader:
@@ -144,11 +131,20 @@ class Search:
         return out_list
 
 
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     filename = 'assignment1/code/postillon.csv'
     index = index(filename=filename)
     search = Search(filename=filename, index=index)
-    
+    print(search.bigrams_dictionary)
+    """
     #queries
     print('weiß AND maß')
     for item in search.query('weiß', 'maß'):
@@ -165,4 +161,5 @@ if __name__ == "__main__":
     print('weiss AND masse')
     for item in search.query('weiss', 'masse'):
         print(item, '\n')
+    """
 
