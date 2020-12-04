@@ -65,16 +65,35 @@ class Search:
         self.bigrams_index = self.getBigramIndex()
         self.bigrams_dictionary, self.bigrams_postings_lists = self.bigrams_index
 
-    def getPostingList(self, postings_listID):
+    def getPostingList(self, postings_listID: int) -> list:
+        """Will return a list with the postings given the postings list ID.
+
+        Args:
+            postings_listID (int): The ID of the postings list.
+
+        Returns:
+            list: return the list with the postings.
+        """
         return self.postings_lists[postings_listID]
     
     def getTermBigrams(self, term: str):
+        """Returns the bigrams of a given term. 
+
+        Args:
+            term (str): A term.
+
+        Returns:
+            tuple: The bigrams of a term.
+        """
         # bigrams for wildcards on the left side
         if term[0] == '*':
             tuple_bigrams = tuple(list(nltk.bigrams(term)) + [(term[-1], '$')])[1:]
+        
         # bigrams for wildcards on the right side
         elif term[-1] == '*':
             tuple_bigrams = tuple([('$', term[0])] + list(nltk.bigrams(term)))[:-1]
+        
+        # bigrams
         else:
             tuple_bigrams = tuple([('$', term[0])] + list(nltk.bigrams(term)) + [(term[-1], '$')])
         
@@ -85,7 +104,9 @@ class Search:
 
         return tuple(bigrams)
     
-    def getBigramIndex(self): 
+    def getBigramIndex(self):
+        """Generate a Bigram Index from an other Index"""
+
         #generate a new dictionary witch contains 
         #bigrams of the terms as the key
         bigrams_dictionary = {}
@@ -94,7 +115,18 @@ class Search:
 
         return bigrams_dictionary, self.postings_lists
     
-    def query(self, term1: str, term2: str = ''):
+    def query(self, term1: str, term2: str = '') -> list:
+        """Search if one or two terms are contained in the same document.
+        Then returns the document ID and the news text.
+
+        Args:
+            term1 (str): A term
+            term2 (str, optional): A term or nothings. Defaults to ''.
+
+        Returns:
+            list: A list of results
+        """
+
         #dictionary, postings_lists = self.index
         out_list = []
 
@@ -140,7 +172,16 @@ class Search:
                         out_list.append((docID, news_text))
         return out_list
 
-    def getWildcardTerms(self, term):
+    def getWildcardTerms(self, term: str) -> list:
+        """Retuns a list of terms for a given term with a wildcard.
+        The terms will be returned in the form of bigrams.
+
+        Args:
+            term (str): A term or a part of it.
+
+        Returns:
+            [list]: A list of term's bigrams
+        """
         out_list = []
         bigrams_term_wildcard = self.getTermBigrams(term)
         
@@ -165,7 +206,17 @@ class Search:
 
         return out_list
 
-    def queryWildcards(self, term1, term2):
+    def queryWildcards(self, term1: str, term2: str) -> list::
+        """Returns the resoult of a query with wildcards implementation.
+        A query for every term in the list of terms found for a given wildcard.
+
+        Args:
+            term1 (str): A term.
+            term2 (str): A term.
+
+        Returns:
+            list: A list with the results of all the queries.
+        """
         out_list = []
         bigrams_list_term1 = self.getWildcardTerms(term1)
         #print(bigrams_list_term1)
@@ -191,28 +242,7 @@ if __name__ == "__main__":
     search = Search(filename=filename, index=index)
     
     print( search.queryWildcards('wei*', 'maße') )
-    print( search.queryWildcards('weiss', '*e') )
-    
-    
-
-
-
-    """
-    #queries
-    print('weiß AND maß')
-    for item in search.query('weiß', 'maß'):
-        print(item)
-    
-    print('weiß AND masse')
-    for item in search.query('weiß', 'masse'):
-        print(item, '\n')
-    
-    print('weiss AND maße')
-    for item in search.query('weiss', 'maße'):
-        print(item, '\n')
-    
-    print('weiss AND masse')
-    for item in search.query('weiss', 'masse'):
-        print(item, '\n')
-    """
+    print( search.queryWildcards('weiss', '*aße') )
+    print( search.queryWildcards('wei*', '*aße') )
+    #TODO: implement wildcard in the midle
 
