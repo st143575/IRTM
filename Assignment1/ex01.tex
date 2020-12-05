@@ -64,7 +64,7 @@
     Alberto Saponaro - saponaroalberto97@gmail.com\\
     Walter Väth - walter.vaeth@gmail.com\\
     Chong Shen - st143575@stud.uni-stuttgart.de\\
-    Xin Pang - Email
+    Xin Pang - st145113@stud.uni-stuttgart.de\\
 }
 \ofoot{\pagemark}
 
@@ -99,25 +99,10 @@ Without skip pointers we must compare the terms step by step, although 5 in \tex
 
 \clearpage
 \section*{Pen and Paper Task 2}
-\begin{lstlisting}
-    tokenize(text: string):
-        token = ''
-        list_of_tokens = []
+\begin{figure}[ht]
+    \includegraphics[width=0.8\textwidth]{img/p&p2.pdf}
+\end{figure}
 
-        for char in text:
-            if char == ' ':  #whitespace
-                list_of_tokens.add(token)
-                token = '' #empty string
-            if char is a symbol:
-                list_of_tokens.add(token)
-                list_of_token.add(char)
-                token = '' #empty string
-            else:
-                token += char
-                
-        return list_of_tokens
-
-\end{lstlisting}
 
 \clearpage
 \section*{Pen and Paper Task 3}
@@ -135,6 +120,11 @@ cross product = \{
 \\
 From all tuples in the cross product, the tuples (3,1) and (2,3) fulfill the query's condition abs(tuple[1]-tuple[0]) $\leq$ 2. So the answer is: document 1, document 3.\\
 
+\clearpage
+\section*{Pen and Paper Task 4}
+\begin{figure}[ht]
+    \includegraphics[width=1\textwidth]{img/p&p4.png}
+\end{figure}
 
 \clearpage
 \section*{Programming Task 1}
