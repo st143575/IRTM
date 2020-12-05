@@ -75,11 +75,20 @@
 
 \section*{Task 1}
 \begin{itemize}
-	\item The master assign a split to the parser
-	\item The parser emits (term, docID)-pairs
-	\item The master gives the postings to the inverter
-	\item The inverter sorts the postings and write them in the posting list
+	\item Tkey-value pairs with (termID, docID).
+	\item The parser writes the output to the segment files.
+	\item The location of the relevant segment files.
+	\item The collected values (docIDs) for a given key (termID).
 \end{itemize}
+\subsection*{Discssion:}
+The right amount of parsers depend on the size of the input and how it is splitted. 
+Therefore it depends on how well the input can be splitted in splits with a reasonable size. Each parser should have a similar amount of data to work on.
+If we look for example at the English alphabetic characters, we could decide to split 26 characters into equal parts, e.g. divide 26 by 4 or by 6.
+For a well-balanced working speed each splitted input should be of the same size and the absolute number of splits shouldn't be too large for better
+efficiency. Therefore one parser for each term would be inefficient while one parser overall wouldn't be useful because there is no need for splitting data.\\
+
+The parsers write the segment files, where one file exists for each term partition. We need an inverter for each term partition, because the master
+gives for each term another inverter.
 
 \section*{Task 2}
 
