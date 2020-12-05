@@ -266,6 +266,6 @@ if __name__ == "__main__":
     #wildcards
     #print(search.queryWildcards('weiß', 'maße'))
     #print(search.queryWildcards('weiss', '*aße'))
-    print(search.queryWildcards('wei*', '*asse'))
+    #print(search.queryWildcards('wei*', '*asse'))
     #print(search.queryWildcards('wei*s', 'm*sse'))
 
