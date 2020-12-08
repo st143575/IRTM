@@ -91,6 +91,8 @@ The parsers write the segment files, where one file exists for each term partiti
 gives for each term another inverter.
 
 \section*{Task 2}
+Break the update document into several splits and assign the splits to idle computer which parses these splits and outputs partitions of terms. Inverter uses these partitions to write new postings lists and merge them with the existing.\\
+Only use the idle computer so that the entire system will not slow down too much.\\
 
 \section*{Task 3}
 \subsection*{Subtask 3.1}
@@ -98,6 +100,7 @@ $k=10, b\thickapprox 0,5$
 \subsection*{Subtask 3.2}
 $M=100000$
 
+\clearpage
 \section*{Task 4}
 $216_{10} = 11011000_{2}$ \\ 
 \textbf{variable byte code: } \textcolor{red}{0}0000001 \textcolor{red}{1}1011000 \\
