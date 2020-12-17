@@ -205,17 +205,17 @@ class Search:
 
         # wildcard on the right side
         elif term[0] == '$' and term[-1] != '$':
-            for bigrams_term_dictionary in self.bigrams_dictionary:
+            for term_bigrams in self.bigrams_dictionary:
                 
-                if bigrams_term_dictionary[0:len(bigrams_term_wildcard)] == bigrams_term_wildcard:
-                    out_list.append(bigrams_term_dictionary)
+                if term_bigrams[0:len(bigrams_term_wildcard)] == bigrams_term_wildcard:
+                    out_list.append(term_bigrams)
         
         #wildcard on the left side
         elif term[0] != '$' and term[-1] == '$':
         
-            for bigrams_term_dictionary in self.bigrams_dictionary:
-                if bigrams_term_dictionary[::-1][0:len(bigrams_term_wildcard)] == bigrams_term_wildcard[::-1]:
-                    out_list.append(bigrams_term_dictionary)
+            for term_bigrams in self.bigrams_dictionary:
+                if term_bigrams[::-1][0:len(bigrams_term_wildcard)] == bigrams_term_wildcard[::-1]:
+                    out_list.append(term_bigrams)
         
         # wildcard in the of the term or no wildcard
         else:
@@ -223,10 +223,10 @@ class Search:
             term_split_1 = self.getTermBigrams(term_splits[0])[:-1]
             term_split_2 = self.getTermBigrams(term_splits[1])[1:]
 
-            for bigrams_term_dictionary in self.bigrams_dictionary: 
-                if bigrams_term_dictionary[:len(term_split_1)] == term_split_1:
-                    if bigrams_term_dictionary[::-1][:len(term_split_2)] == term_split_2[::-1]:
-                        out_list.append(bigrams_term_dictionary)
+            for term_bigrams in self.bigrams_dictionary: 
+                if term_bigrams[:len(term_split_1)] == term_split_1:
+                    if term_bigrams[::-1][:len(term_split_2)] == term_split_2[::-1]:
+                        out_list.append(term_bigrams)
 
         return out_list
 
@@ -266,6 +266,6 @@ if __name__ == "__main__":
     #wildcards
     #print(search.queryWildcards('weiß', 'maße'))
     #print(search.queryWildcards('weiss', '*aße'))
-    print(search.queryWildcards('wei*', '*asse'))
+    #print(search.queryWildcards('wei*', '*asse'))
     #print(search.queryWildcards('wei*s', 'm*sse'))
 
