@@ -74,7 +74,7 @@
 \begin{document}
     
 \section*{Task 1}
-\subsection{Subtask 1}
+\subsection*{Subtask 1}
 \begin{center}
     $w_{t,d}=(1+\log tf_{t,d})*\log \frac{N}{df_t}$
 \end{center}
@@ -102,11 +102,46 @@
     \item $w_{ballpens, d_3} = (1+\log 1) * \log \frac{3}{1} \approx 1,1$
 \end{itemize}
 
-\subsubsection*{Subtask 2}
+\begin{tabular}{|l|c|c|c|}
+    \hline
+    \textbf{Terms} & \textbf{$d_1$} & \textbf{$d_2$} & \textbf{$d_3$} \\ \hline
+    pens           & 1.1               & 0.0               & 0.0               \\ \hline
+    write          & 0.0               & 0.0               & 0.0               \\ \hline
+    on             & 0.0               & 0.0               & 0.0               \\ \hline
+    paper          & 0.0               & 0.0               & 0.0               \\ \hline
+    pencils        & 0.0               & 1.1               & 0.0               \\ \hline
+    envelope       & 0.0               & 1.1               & 0.0               \\ \hline
+    ballpens       & 0.0               & 0.0               & 1.1               \\ \hline
+\end{tabular}
+\newline
+$\overrightarrow{d_1} = (1.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)$\\
+$\overrightarrow{d_2} = (0.0, 0.0, 0.0, 0.0, 1.1, 1.1, 0.0)$\\
+$\overrightarrow{d_3} = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.1)$\\
+
+\subsection*{Subtask 2}
+$w_{ballpens, q} = (1+\log 1) * \log \frac{3}{1} \approx 1,1$\\
+$w_{envelope, q} = (1+\log 1) * \log \frac{3}{1} \approx 1,1$\\
+
+$\overrightarrow{q}=(0.0, 0.0, 0.0, 0.0, 0.0, 1.1, 1.1)$\\
+
+$SIM(\overrightarrow{q}, \overrightarrow{d_1}) = \frac{\overrightarrow{q}*\overrightarrow{d_1}}{|\overrightarrow{q}|*|\overrightarrow{d_1}|}
+= 0$\\
+$SIM(\overrightarrow{q}, \overrightarrow{d_2}) = \frac{\overrightarrow{q}*\overrightarrow{d_2}}{|\overrightarrow{q}|*|\overrightarrow{d_2}|}
+= \frac{1.21}{49} \approx  0.025$\\
+$SIM(\overrightarrow{q}, \overrightarrow{d_3}) = \frac{\overrightarrow{q}*\overrightarrow{d_3}}{|\overrightarrow{q}|*|\overrightarrow{d_3}|}
+= \frac{1.21}{49} \approx 0.025$\\
+
+\begin{tabular}{|c|c|r|}
+    \hline
+    \textbf{Rank} & \textbf{Doc} & \multicolumn{1}{c|}{\textbf{SIM}} \\ \hline
+    1             & 2            & 0                                 \\ \hline
+    1             & 3            & 0.025                             \\ \hline
+    2             & 1            & 0.025                             \\ \hline
+\end{tabular}
 
 
 \pagebreak
-\subsection*{Task 3}
+\section*{Task 3}
 
 \begin{itemize}
     \item $Precision = \frac{TPs}{TPs+FPs}$
