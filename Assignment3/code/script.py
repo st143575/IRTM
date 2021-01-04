@@ -1,5 +1,6 @@
-import csv, re, nltk
+import csv, re, nltk, math 
 from collections import Counter
+from operator import itemgetter
 
 class Search:
 
@@ -30,8 +31,11 @@ class Search:
             
             #iterate through each row of the table
             for row in reader:
+                # skip table header
+                if( row[0] == 'id' ): continue
+
                 #(doc_id, url, pub_date, title, news_text) = row
-                doc_id = row[0]
+                doc_id = int(row[0])
                 news_text = row[-1]
 
                 #tokenize and normalize news text
@@ -46,6 +50,7 @@ class Search:
                 
             #sort postings  
             postings = sorted(postings[1:], key = lambda tup: tup[0])
+            
             
 
             post_id = 0
@@ -77,7 +82,7 @@ class Search:
         return dictionary, postings_lists
     
     
-    def getPostingList(self, postings_list_id: int) -> list:
+    def getPostingList(self, postings_list_ID: int) -> list:
         """Will return a list with the postings given the postings list ID.
 
         Args:
@@ -86,101 +91,106 @@ class Search:
         Returns:
             list: return the list with the postings.
         """
-        return self.index[-1][postings_list_id]
+        return self.postings_lists[postings_list_ID]
     
- 
 
-    def tf_matching_scores(self, sentence: str):
-        dictionary, postings_lists = self.index
-        query_postings_lists_IDs = []
-        query_doc_IDs = set()
+    def tf_matching_scores(self, query: str) ->dict:
+        query = query.lower()
+        query = query.split()
         
-        # finds all relevant postings lists
-        for term in sentence.split():
-            postings_list_id = dictionary[term][-1]
-            query_postings_lists_IDs.extend(self.getPostingList(postings_list_id))
-
-        # finds all relevant documents
-        for list_ID in query_postings_lists_IDs:
-            list_ID = int(list_ID) #solve some issues
-            postings_list = postings_lists[list_ID]
-            query_doc_IDs.update(postings_list)
+        docs_weights = {}
+        tf_matching_scores = {}
         
-        # convert all IDs from strings in intagers
-        query_doc_IDs = [int(doc_ID) for doc_ID in query_doc_IDs]
-        
-        sorted_query_doc_IDs = sorted(query_doc_IDs, reverse=True)
-
-        # init the frequecy weights of the query's terms for each document
-        documents_weights = {}
-        for doc_ID in sorted_query_doc_IDs:
-            documents_weights.update({doc_ID: []})
-
         # retrive the news title and text to calculate tf-weights
-        with open(self.filename, 'r') as file:
+        with open( self.filename, 'r' ) as file:
             reader = csv.reader(file, delimiter = '\t')
             
             #iterate through each row of the table
             for row in reader:
                 # skip table header
                 if( row[0] == 'id' ): continue
-
-                # if all documents were found 
-                # we don't need to iterate anymore
-                if not sorted_query_doc_IDs: break
                 
                 #(doc_id, url, pub_date, title, news_text) = row
                 doc_ID = int(row[0])
                 news_title = row[-2]
                 news_text = row[-1]
+
+                docs_weights.update({doc_ID: []})
+
+                tokenizer = nltk.RegexpTokenizer(r"\w+")
+                normalized_news_title = tokenizer.tokenize(news_title.lower())
+                normalized_news_text = tokenizer.tokenize(news_text.lower())
+
+                news_terms = normalized_news_title + normalized_news_text
                 
-                for term in sentence.split():
-                    if("sportbund" in news_text): print(term, "FOUND!")
+                for term in query:
+                    
+                    if( term in news_terms ):
+                        log_tf = math.log(dict(Counter(news_terms))[term])
+                        docs_weights[doc_ID].append(1 + log_tf)
+                    else: 
+                        docs_weights[doc_ID].append(0)
                 
-                """
-                query_doc_ID = sorted_query_doc_IDs[-1]
-                #print(query_doc_ID)
+                # delete all documents that are not relevant to the query
+                if( docs_weights[doc_ID] == [0,0] ):
+                    docs_weights.pop(doc_ID)
 
-                # calculate tf-weights in the relevant documents
-                if( doc_ID == query_doc_ID ):
-                
-                    tokenizer = nltk.RegexpTokenizer(r"\w+")
-                    normalized_news_title = tokenizer.tokenize(news_title.lower())
-                    normalized_news_text = tokenizer.tokenize(news_text.lower())
-
-                    news_terms = normalized_news_title + normalized_news_text
-                    
-                    tf_news = dict(Counter(news_terms))
-                    
-                    for term in sentence.split():
-                        #print(tf_news.keys())
-                        for key in tf_news:
-                            print(key)
-
-                        
-                        if term in tf_news:
-                            
-                            documents_weights[doc_ID].append(tf_news[term])
-                        else: 
-                            documents_weights[doc_ID].append(0)
-                    
-                    
-
-                    sorted_query_doc_IDs = sorted_query_doc_IDs[:-1]
-                    """  
-
-
+                #calculate tf-matching-scores
+                for doc_ID in docs_weights:
+                    tf_matching_scores.update( {doc_ID: sum(docs_weights[doc_ID])} )
         
-        #return documents_weights
-        pass
+        return tf_matching_scores
 
+    def rank(self, scores: dict):
+        sorted_dict = sorted(scores.items(), key=itemgetter(1), reverse=True)
+        ranked_list = []
+        rank = 0
+        old_score = 0
+        
+        for items in sorted_dict:
+            doc_ID = items[0]
+            score = items[-1]
 
+            # don't rank if the score is zero
+            if( score == 0 ): continue
+            
+            if( old_score == score):
+                ranked_list.append((rank, doc_ID, score))
+            else:
+                rank += 1
+                ranked_list.append((rank, doc_ID, score))
+                old_score = score
+        
+        # print ranking table
+        #print only top 10
+        print("Rank \t", "Doc \t", "Score")
+        print("-"*30)
+        counter = 0
+        for row in ranked_list:
+            if ( counter > 9 ): break
+            rank, doc_ID, score = row
+            print(rank, "\t", doc_ID, "\t", round(score, 5))
+            counter += 1
+        
 
 
 if __name__ == "__main__":
     filename = 'assignment3/code/postillon.csv'
     search = Search(filename=filename)
+    
+    print("\n"*3)
+    print("1. Query: olympische sportbund")
+    scores = search.tf_matching_scores("olympische sportbund")
+    search.rank(scores)
 
-    print(search.tf_matching_scores("olympische sportbund"))
+    print("\n"*3)
+    print("2. Query: rot wein")
+    scores = search.tf_matching_scores("rot wein")
+    search.rank(scores)
+
+    print("\n"*3)
+    print("3. Query: kinder sind faul")
+    scores = search.tf_matching_scores("kinder sind faul")
+    search.rank(scores)
     
     
