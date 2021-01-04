@@ -1,16 +1,20 @@
 import csv, re, nltk
+from collections import Counter
 
 class Search:
 
     def __init__(self, filename: str):
         self.filename = filename
         self.index = self.generate_index()
+        self.dictionary, self.postings_lists = self.index
 
     
     def generate_index(self) ->tuple:
         """ 
         Generate the inverted index. 
         Dictionary and Postings List are implemented in separated datastructures.
+
+        The Dictionary take a term as a key and returns the size and ID of the postings list.
 
         Returns:
             tuple: Dictionary and Postings List
@@ -86,76 +90,97 @@ class Search:
     
  
 
-    def query(self, term1: str, term2: str = ''):
-        dictionary = self.index[0]
-        out_list = []
-
-        #CASE 1: only one term
-        if term2 == '':
-            post_id = dictionary[term1][1]
-            postings_list = self.getPostingList(post_id)
-
-            #retrive text
-            with open(filename, 'r') as file:
-                reader = csv.reader(file, delimiter = '\t')
-            
-                #iterate through each row of the table
-                for row in reader:
-                    #(doc_id, url, pub_date, title, news_text) = row
-                    doc_id = row[0]
-                    news_text = row[-1]
-                    if doc_id in postings_list:
-                        out_list.append((doc_id, news_text))
+    def tf_matching_scores(self, sentence: str):
+        dictionary, postings_lists = self.index
+        query_postings_lists_IDs = []
+        query_doc_IDs = set()
         
-        #CASE 2: two terms
-        else:    
-            intersection_list = []
+        # finds all relevant postings lists
+        for term in sentence.split():
+            postings_list_id = dictionary[term][-1]
+            query_postings_lists_IDs.extend(self.getPostingList(postings_list_id))
 
-            term1_post_id = dictionary[term1][1]
-            term2_post_id = dictionary[term2][1]
-            
-            term1_postings_list = self.getPostingList(term1_post_id)
-            term2_postings_list = self.getPostingList(term2_post_id)
-            
-            #intersection algorithm
-            for term1_doc_id in term1_postings_list:
-                for term2_doc_id  in term2_postings_list:
-                    if term1_doc_id  == term2_doc_id:
-                        intersection_list.append(term1_doc_id)
-            
-            #retrive text
-            with open(filename, 'r') as file:
-                reader = csv.reader(file, delimiter = '\t')
-            
-                #iterate through each row of the table
-                for row in reader:
-                    #(doc_id, url, pub_date, title, news_text) = row
-                    doc_id = row[0]
-                    news_text = row[-1]
-                    if doc_id in intersection_list:
-                        out_list.append((doc_id, news_text))
+        # finds all relevant documents
+        for list_ID in query_postings_lists_IDs:
+            list_ID = int(list_ID) #solve some issues
+            postings_list = postings_lists[list_ID]
+            query_doc_IDs.update(postings_list)
         
-        return out_list
+        # convert all IDs from strings in intagers
+        query_doc_IDs = [int(doc_ID) for doc_ID in query_doc_IDs]
+        
+        sorted_query_doc_IDs = sorted(query_doc_IDs, reverse=True)
+
+        # init the frequecy weights of the query's terms for each document
+        documents_weights = {}
+        for doc_ID in sorted_query_doc_IDs:
+            documents_weights.update({doc_ID: []})
+
+        # retrive the news title and text to calculate tf-weights
+        with open(self.filename, 'r') as file:
+            reader = csv.reader(file, delimiter = '\t')
+            
+            #iterate through each row of the table
+            for row in reader:
+                # skip table header
+                if( row[0] == 'id' ): continue
+
+                # if all documents were found 
+                # we don't need to iterate anymore
+                if not sorted_query_doc_IDs: break
+                
+                #(doc_id, url, pub_date, title, news_text) = row
+                doc_ID = int(row[0])
+                news_title = row[-2]
+                news_text = row[-1]
+                
+                for term in sentence.split():
+                    if("sportbund" in news_text): print(term, "FOUND!")
+                
+                """
+                query_doc_ID = sorted_query_doc_IDs[-1]
+                #print(query_doc_ID)
+
+                # calculate tf-weights in the relevant documents
+                if( doc_ID == query_doc_ID ):
+                
+                    tokenizer = nltk.RegexpTokenizer(r"\w+")
+                    normalized_news_title = tokenizer.tokenize(news_title.lower())
+                    normalized_news_text = tokenizer.tokenize(news_text.lower())
+
+                    news_terms = normalized_news_title + normalized_news_text
+                    
+                    tf_news = dict(Counter(news_terms))
+                    
+                    for term in sentence.split():
+                        #print(tf_news.keys())
+                        for key in tf_news:
+                            print(key)
+
+                        
+                        if term in tf_news:
+                            
+                            documents_weights[doc_ID].append(tf_news[term])
+                        else: 
+                            documents_weights[doc_ID].append(0)
+                    
+                    
+
+                    sorted_query_doc_IDs = sorted_query_doc_IDs[:-1]
+                    """  
+
+
+        
+        #return documents_weights
+        pass
+
+
 
 
 if __name__ == "__main__":
     filename = 'assignment3/code/postillon.csv'
     search = Search(filename=filename)
+
+    print(search.tf_matching_scores("olympische sportbund"))
     
     
-    #queries
-    print('weiß AND maß')
-    for item in search.query('weiß', 'maß'):
-        print(item)
-    
-    print('weiß AND masse')
-    for item in search.query('weiß', 'masse'):
-        print(item, '\n')
-    
-    print('weiss AND maße')
-    for item in search.query('weiss', 'maße'):
-        print(item, '\n')
-    
-    print('weiss AND masse')
-    for item in search.query('weiss', 'masse'):
-        print(item, '\n')
