@@ -139,6 +139,101 @@ $SIM(\overrightarrow{q}, \overrightarrow{d_3}) = \frac{\overrightarrow{q}*\overr
     2             & 1            & 0                         \\ \hline
 \end{tabular}
 
+\clearpage
+\section*{Task 2}
+Step 0: Information need: Does the result match the query?(match/not match)\\
+\\
+Step 1:\ Search on google with query "computer not boot os x" and record the top 20 results.\\
+\noindent \textbf{the top 20 results:}\\
+\indent 1. What to Do When Your Mac Won't Start Up - How-To Geek\\
+\indent\indent $(https://www.howtogeek.com/217158/what-to-do-when-your-mac-won’t-start-up/)$\\
+\indent 2. How to fix a Mac Or MacBook that won't Turn On Or Boot Up ...\\
+\indent \indent $(https://www.macworld.co.uk/how-to/wont-turn-on-boot-3423817/)$\\
+\indent 3. My Mac Won’t Start or Boot: How To Fix White Screen\\
+\indent \indent $(https://appletoolbox.com/mac-fix-white-screen/)$\\
+\indent 4. 'Restart in OS X' Not Working! Boot Camp\\
+\indent \indent $(https://developer.apple.com/forums/thread/79001)$\\
+\indent 5. Mac Won't Turn On? How to Fix It and Make It Boot\\
+\indent \indent $(https://www.makeuseof.com/tag/mac-wont-boot-step-step-guide-waking/)$\\
+\indent 6. Mac won't boot/turn on after macOS Big Sur update - iBoysoft\\
+\indent \indent $(https://iboysoft.com/mac-data-recovery/mac-computer-wont-boot-after-macos-update.html)$\\
+\indent 7. [Solved] Mac Won't Boot into Recovery Mode - Recoverit\\
+\indent \indent $(https://recoverit.wondershare.com/mac-tips/cannot-boot-into-recovery-mode-mac.html)$\\
+\indent 8. Mac won't boot YouTube\\
+\indent \indent $(https://www.youtube.com/watch?v=snm7p23K2E4)$\\
+\indent 9. MacBook won't boot up? Here's how to fix the problem - Digital ...\\
+\indent \indent $(https://www.digitaltrends.com/computing/apple-macbook-problems-starting-up/)$\\
+\indent 10. Mac White Screen: How To Fix Your Mac That Won’t Turn On\\
+\indent \indent $(https://macreports.com/mac/)$\\
+\indent 11. Mac OS X system does not boot correctly – DisplayLink Support\\
+\indent \indent $(https://support.displaylink.com/knowledgebase/articles/589233-mac-os-x-system-does-not-boot-correctly)$\\
+\indent 12. What to do when Mac OS X Yosemite won't boot - Macintosh ...\\
+\indent \indent $(https://www.macintoshhowto.com/osx/what-to-do-when-mac-os-x-wont-boot.html)$\\
+\indent 13. MacBook Air/Pro won't boot after macOS update, how to fix ...\\
+\indent \indent $(https://techengage.com/macbook-air-pro-wont-boot-after-macos-update-how-to-fix/)$\\
+\indent 14. Holding down the option key isn't allowing me to select ...\\
+\indent \indent $(https://apple.stackexchange.com/questions/99289/holding-down-the-option-key-isnt-allowing-me-to-select-windows-os-x-on-startup)$\\
+\indent 15. What to do when a Mac won't boot to Safe Mode - CNET\\
+\indent \indent $(https://www.cnet.com/news/what-to-do-when-a-mac-wont-boot-to-safe-mode/)$\\
+\indent 16. How to fix a Mac that won't start | TechRadar\\
+\indent \indent $(https://www.techradar.com/how-to/computing/how-to-fix-a-mac-that-won-t-start-1319481)$\\
+\indent 17. Mac SSD not Booting? Try 5 Fixes to Boot up Your Mac | by ...\\
+\indent \indent $(https://medium.com/@kepler.donald/mac-ssd-not-booting-try-5-fixes-to-boot-up-your-mac-710d02aec288)$\\
+\indent 18. Can't boot back to Mac OS from Windows : bootcamp - Reddit\\
+\indent \indent $(https://www.reddit.com/r/bootcamp/comments/bgwqvg/cant_boot_back_to_mac_os_from_windows/)$\\
+\indent 19. live environment - How do I get my Mac to boot from an Ubuntu USB key?\\
+\indent \indent $(https://askubuntu.com/questions/28495/how-do-i-get-my-mac-to-boot-from-an-ubuntu-usb-key)$\\
+\indent 20. My Mac won't start: How to fix the white screen issue?\\
+\indent \indent $(https://blog.pcrisk.com/mac/12137-my-mac-wont-start-how-to-fix-white-screen)$\\
+\\
+Step 2: URLs are listed in Step 1 under each result.\\
+\begin{tabular}{|l|c|c|c|}
+ \hline
+    \textbf{Result} & \textbf{Annotator1} & \textbf{Annotator2} \\ \hline
+    1               & match               & match               \\
+    2               & match               & match               \\
+    3               & match               & match               \\
+    4               & not match           & not match           \\
+    5               & match               & match               \\
+    6               & match               & match               \\
+    7               & not match           & not match           \\
+    8               & match               & match               \\
+    9               & match               & match               \\
+    10              & match               & match               \\
+    11              & match               & match               \\
+    12              & match               & not match           \\
+    13              & match               & match               \\
+    14              & not match           & not match           \\
+    15              & not match           & not match           \\
+    16              & match               & match               \\
+    17              & match               & not match           \\
+    18              & not match           & not match           \\
+    19              & not match           & not match           \\
+    20              & not match           & match               \\
+    \hline
+\end{tabular}
+\\
+\\
+\\
+Step 3:\\
+Cohen's kappa $\kappa = \frac{P(A) - P(E)}{1 - P(E)}$\\
+\\
+$P(A) = \frac{17}{20} = 0.85$\\
+\\
+$P(E) = \sum_{c} P(c | A1) * P(c | A2) = \frac{13}{20}*\frac{12}{20} + \frac{7}{20}*\frac{8}{20} = 0.53$\\
+\\
+$\kappa = \frac{0.85 - 0.53}{1 - 0.53} \approx 0.68$\\
+\\
+\clearpage
+\noindent Step 4:\\
+\\
+Substantial Agreement. The inter annotator agreement is on the substantial high level, i.e. the two annotators agree with each other on most results. By results 12, 17 and 20, the two annotators annotate the results differently. It may be because the two annotators have different antecedents for the same query or they have different world knowledge.\\
+\\
+For example, in query 12, both annotators' computers run on Mac OS Big Sur. Annotator 1 says it matches, because he knows that the reason that his computer doesn't boot is irrelevant to the version of operating system. But annotator 2 doesn't know this fact and only wants the result about Big Sur. Thus he considers that the result doesn't match.\\
+\\
+In query 17, Annotator 1 says it matches, because his Mac does have an SSD. Annotator 2 says it doesn't match, because his Mac has an HDD.\\
+\\
+In query 20, annotator 1 says it doesn't match, because his computer won't boot, but doesn't have white screen(maybe blue screen). Annotator 2's computer won't boot and has white screen, so he considers that the result matches.\\
 
 \pagebreak
 \section*{Task 3}
@@ -175,6 +270,12 @@ If the IDF value of a term is 0(occurs in all documents) than will have the same
 \\
 Advantage of using stops words lists are that we could prevent the calculation of the IDF for stops
 and we can be more precise not including words that maybe occurs in every document but aren't stops.
+
+\section*{Task 5}
+
+Document-at-a-time processing: Postings lists are ordered according to both docID and PageRank. The cosine similarity is computed based on this scheme. The query-document similarity score of each document is computed one by one, i.e. when the score of the current document is calculated, then calculate the score of the next one.\\
+\\
+Term-at-a-time processing: No PageRank as weight. Process the postings list of a query term completely, then process the postings list of the next query term. Use an accumulator for each encountered docID.\\
 
 \section*{Programming Task}
 
