@@ -95,6 +95,14 @@ class Search:
     
 
     def tf_matching_scores(self, query: str) ->dict:
+        """Calculate tf-matching-score for all documents given the query.
+
+        Args:
+            query (str): Query against which we calculate the document's score
+
+        Returns:
+            dict: For each document the tf-matching-score 
+        """
         query = query.lower()
         query = query.split()
         
@@ -141,7 +149,12 @@ class Search:
         
         return tf_matching_scores
 
-    def rank(self, scores: dict):
+    def ranking_table(self, scores: dict):
+        """Print a ranking table given a dictionary of scores
+
+        Args:
+            scores (dict): Datastructure that contains all scores
+        """
         sorted_dict = sorted(scores.items(), key=itemgetter(1), reverse=True)
         ranked_list = []
         rank = 0
@@ -181,16 +194,16 @@ if __name__ == "__main__":
     print("\n"*3)
     print("1. Query: olympische sportbund")
     scores = search.tf_matching_scores("olympische sportbund")
-    search.rank(scores)
+    search.ranking_table(scores)
 
     print("\n"*3)
     print("2. Query: rot wein")
     scores = search.tf_matching_scores("rot wein")
-    search.rank(scores)
+    search.ranking_table(scores)
 
     print("\n"*3)
     print("3. Query: kinder sind faul")
     scores = search.tf_matching_scores("kinder sind faul")
-    search.rank(scores)
+    search.ranking_table(scores)
     
     
