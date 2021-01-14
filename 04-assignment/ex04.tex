@@ -1,0 +1,122 @@
+\documentclass[a4paper]{scrartcl}
+\usepackage{makecell}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{anysize}
+\usepackage{amsmath}
+\usepackage{kpfonts}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[parfill]{parskip}
+
+\marginsize{25mm}{25mm}{25mm}{25mm}
+%---Code-Editor Config ------------------------%
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstset{basicstyle=\ttfamily}
+\lstset{literate=%
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+	{à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+	{À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+	{ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+	{Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+	{â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+	{Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+	{œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+	{ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+	{€}{{\EUR}}1 {£}{{\pounds}}1
+	{>}{{$>$}}1{<}{{$<$}}1
+}
+\lstset{
+	language=Python,				% the language of the code
+	basicstyle=\footnotesize,			% the size of the fonts that are used for the code
+	numbers=left,					% where to put the line-numbers
+	numberstyle=\tiny\color{gray},		% the style that is used for the line-numbers
+	stepnumber=1,					% the step between two line-numbers. If it's 1, each line will be numbered
+	numbersep=5pt,				% how far the line-numbers are from the code
+	backgroundcolor=\color{white},		% choose the background color. You must add \usepackage{color}
+	showspaces=false,				% show spaces adding particular underscores
+	showstringspaces=false,			% underline spaces within strings
+	showtabs=false,				% show tabs within strings adding particular underscores
+	frame=single,					% adds a frame around the code
+	rulecolor=\color{black},			% if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+	tabsize=2,						% sets default tabsize to 2 spaces
+	captionpos=b,					% sets the caption-position to bottom
+	breaklines=true,                			% sets automatic line breaking
+  	breakatwhitespace=false,       		% sets if automatic breaks should only happen at whitespace
+  	title=\lstname,        % show the filename of files included with \lstinputlisting; % also try caption instead of title
+  	keywordstyle=\color{blue},          	% keyword style
+  	commentstyle=\color{dkgreen},       	% comment style
+  	stringstyle=\color{mauve},         		% string literal style
+  	escapeinside={\%*}{*)},            		% if you want to add LaTeX within your code
+  	morekeywords={*,...}              		% if you want to add more keywords to the set
+}
+
+%Header and Footer -----------------------%
+\usepackage[headsepline]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\clearpairofpagestyles
+%\setlength{\headheight}{40.8pt}
+\setlength{\headheight}{56pt}
+\ihead{IRTM\\ Wi 20/21\\ Assigment 4} 
+\ohead{
+    Alberto Saponaro - saponaroalberto97@gmail.com\\
+    Walter Väth - walter.vaeth@gmail.com\\
+    Chong Shen - st143575@stud.uni-stuttgart.de\\
+    Xin Pang - st145113@stud.uni-stuttgart.de
+}
+\ofoot{\pagemark}
+
+
+
+%-----------------------------------------------%
+%  BEGIN                                        %
+%-----------------------------------------------%
+\begin{document}
+    
+\section*{Task 1}
+\textbf{Vocabulary} = \{ happy, new, year, holiday, term, starts, work, celebrations \}\\
+$|$Vocabulary$|$ = 8
+
+\subsubsection*{Prior:}
+    $P(c_1) = \frac{3}{5} = 0.6$\\
+    $P(c_2) = \frac{2}{5} = 0.4$ 
+
+\subsubsection*{Posterior: (with Add-One-Smoothing)}
+\begin{multicols}{2}
+    $P(happy|c_1) = \frac{2 + 1}{5 + 8} = \frac{3}{13}$\\
+    $P(new|c_1) = \frac{2 + 1}{5 + 8} = \frac{3}{13}$\\
+    $P(year|c_1) = \frac{2 + 1}{5 + 8} = \frac{3}{13}$\\
+    $P(holiday|c_1) = \frac{1 + 1}{5 + 8} = \frac{2}{13}$\\
+    $P(term|c_1) = \frac{0 + 1}{5 + 8} = \frac{1}{13}$\\
+    $P(starts|c_1) = \frac{0 + 1}{5 + 8} = \frac{1}{13}$\\
+    $P(work|c_1) = \frac{0 + 1}{5 + 8} = \frac{1}{13}$\\
+    $P(celebrations|c_1) = \frac{0 + 1}{5 + 8} = \frac{1}{13}$
+
+    $P(happy|c_2) = \frac{0 + 1}{5 + 8} = \frac{1}{13}$\\
+    $P(new|c_2) = \frac{0 + 1}{5 + 8} = \frac{1}{13}$\\
+    $P(year|c_2) = \frac{0 + 1}{5 + 8} = \frac{1}{13}$\\
+    $P(holiday|c_2) = \frac{0 + 1}{5 + 8} = \frac{1}{13}$\\
+    $P(term|c_2) = \frac{1 + 1}{5 + 8} = \frac{2}{13}$\\
+    $P(starts|c_2) = \frac{2 + 1} + 1{5 + 8} = \frac{3}{13}$\\
+    $P(work|c_2) = \frac{1 + 1}{5 + 8} = \frac{2}{13}$\\
+    $P(celebrations|c_2) = \frac{0 + 1}{5 + 8} = \frac{1}{13}$
+\end{multicols}
+
+$P(c_1|d) = \frac{3}{13} * \frac{3}{13} * \frac{3}{13} * \frac{1}{13} = \frac{27}{28561} = c_{map}$\\
+$P(c_2|d) = \frac{1}{13} * \frac{1}{13} * \frac{1}{13} * \frac{1}{13} = \frac{1}{28561}$
+
+The model assigned the class $c_1$ to the document.
+
+
+
+
+\section*{Task 2}
+
+
+\end{document}
