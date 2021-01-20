@@ -9,12 +9,23 @@ class SVM_Classifier:
     path = "04-assignment/code/"
 
     def __init__(self):
-        self.train_data = self.load_data("games-train.csv")
+        self.corpus = self.generate_corpus("games-train.csv")
         self.term_weights_dictionary = self.calc_term_weights_dictionary()
     
     
     
-    def load_data(self, filename: str) ->pd.DataFrame:
+    def generate_corpus(self, filename: str) ->pd.DataFrame:
+        """ Take data as an imput and generate the corpus for classification.
+            The data-structure is a pandas DataFrame with two columns.
+            The labels are converted in binary values(1 = 'gut', -1='schlecht')
+            and the text is normalized. Some stopsword will be also removed.
+
+        Args:
+            filename (str): name of the dataset
+
+        Returns:
+            pd.DataFrame: Pandas DataFrame with two columns(label, text)
+        """
         
         # import data
         dataframe = pd.read_csv(self.path + filename, sep="\t", header=None)
@@ -60,9 +71,15 @@ class SVM_Classifier:
     
 
     def calc_term_weights_dictionary(self) ->dict:
+        """ Calculate the weight of each term and store them in a dictionary.
+        the weight is calulated with term-frequency * label.
+
+        Returns:
+            dict: store the weight as a value of a term
+        """
         term_weights_dict = {}
 
-        for row in self.train_data.iterrows():
+        for row in self.corpus.iterrows():
             label, text = row[-1]
 
             term_freq_dict = Counter(text)
@@ -86,19 +103,18 @@ class SVM_Classifier:
 
 if __name__ == "__main__":
     classifier = SVM_Classifier()
-    train_data = classifier.train_data
     dictionary = classifier.term_weights_dictionary
     
     
     sorted_term_weight_list = sorted(dictionary.items(), key=itemgetter(1))
     
-    print(" -"*50, "\n Top 100 result for class 'gut': \n", "-"*50)
+    print("-"*50, "\n Top 100 result for class 'gut': \n", "-"*50)
     for term, weight in sorted_term_weight_list[::-1][:100]:
         print(" ", weight, "\t", term)
     
     print("\n"*3)
 
-    print(" -"*50, "\n Top 100 result for class 'schlecht': \n", "-"*50)
+    print("-"*50, "\n Top 100 result for class 'schlecht': \n", "-"*50)
     for term, weight in sorted_term_weight_list[:100]:
         print(" ", weight, "\t", term)
   
